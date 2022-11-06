@@ -22,7 +22,7 @@ export default function Sort() {
         <b>Сортировка по:</b>
         <span onClick={() => setIsVisible(!isVisible)}>{sortType[sortChoise]}</span>
       </div>
-      {isVisible ? (
+      {isVisible && (
         <div className='sort__popup'>
           <ul>
             {sortType.map((item, index) => (
@@ -38,8 +38,6 @@ export default function Sort() {
             ))}
           </ul>
         </div>
-      ) : (
-        ''
       )}
     </div>
   );
