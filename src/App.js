@@ -1,14 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Categories from './components/Categories';
 import Header from './components/Header';
 import Pizza from './components/PizzaBlock';
 import Sort from './components/Sort';
 
+import pizzas from './assets/pizzas.json';
+
 import './scss/app.scss';
 
 function App() {
   const [pizzaList, setPizzaList] = useState([]);
+
+  useEffect(() => {
+    setPizzaList(pizzas);
+  }, []);
 
   return (
     <div className='App'>
@@ -23,8 +29,11 @@ function App() {
             </div>
             <h2 className='content__title'>Все пиццы</h2>
             <div className='content__items'>
-              {pizzaList.map((item) => (
-                <Pizza />
+              {pizzaList.map((item, index) => (
+                <Pizza
+                  key={item.id}
+                  {...item}
+                />
               ))}
             </div>
           </div>

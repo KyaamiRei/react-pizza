@@ -1,3 +1,5 @@
+import logo from '../assets/pizza-logo.svg'
+
 export default function Header() {
   return (
     <div className='header'>
@@ -5,7 +7,7 @@ export default function Header() {
         <div className='header__logo'>
           <img
             width='38'
-            src='./img/pizza-logo.svg'
+            src={logo}
             alt='Pizza logo'
           />
           <div>
