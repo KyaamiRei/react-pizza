@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import axios from 'axios';
+
+import { SearchContext } from '../App';
 
 import Categories from '../components/Categories';
 import Pagination from '../Pagination';
@@ -8,7 +10,9 @@ import Pizza from '../components/PizzaBlock';
 import Sort from '../components/Sort';
 import Sceleton from '../components/PizzaBlock/Sceleton';
 
-export default function Home({ searchValue }) {
+export default function Home() {
+  const { searchValue } = useContext(SearchContext);
+
   const [categoryActiveId, setCategoryActiveId] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [pizzaList, setPizzaList] = useState([]);
@@ -74,7 +78,7 @@ export default function Home({ searchValue }) {
         </h2>
         <div className='content__items'>{isLoading ? sceleton : pizzas}</div>
       </div>
-      <Pagination onChangePage={(number) => setCurrentPage(number)}/>
+      <Pagination onChangePage={(number) => setCurrentPage(number)} />
     </>
   );
 }
