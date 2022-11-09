@@ -68,8 +68,6 @@ export default function Home() {
 
   // Если был перывый рендер, то проверяем URL параметры и сохраняет в Redux
   useEffect(() => {
-    console.log(isSearch);
-
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
       const sort = sortType.find((obj) => obj.sortProperty === params.sortProperty);
