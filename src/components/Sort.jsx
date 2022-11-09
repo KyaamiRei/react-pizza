@@ -1,6 +1,12 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-export default function Sort({ value, setSortProperty }) {
+import { setSortType } from '../redux/slices/filterSlice';
+
+export default function Sort() {
+  const dispatch = useDispatch();
+  const { sort } = useSelector((state) => state.filterSlice);
+
   const [isVisible, setIsVisible] = useState(false);
   const sortType = [
     { name: 'популярности (desc)', sortProperty: '-rating' },
@@ -9,7 +15,6 @@ export default function Sort({ value, setSortProperty }) {
     { name: 'цене (asc)', sortProperty: 'price' },
     { name: 'алфавиту (desc)', sortProperty: '-title' },
     { name: 'алфавиту (asc)', sortProperty: 'title' },
-
   ];
 
   return (
@@ -27,7 +32,7 @@ export default function Sort({ value, setSortProperty }) {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setIsVisible(!isVisible)}>{value.name}</span>
+        <span onClick={() => setIsVisible(!isVisible)}>{sort.name}</span>
       </div>
       {isVisible && (
         <div className='sort__popup'>
@@ -36,10 +41,10 @@ export default function Sort({ value, setSortProperty }) {
               <li
                 key={index}
                 onClick={() => {
-                  setSortProperty(obj);
+                  dispatch(setSortType(obj));
                   setIsVisible(!isVisible);
                 }}
-                className={value.sortProperty === obj.sortProperty ? 'active' : ''}>
+                className={sort.sortProperty === obj.sortProperty ? 'active' : ''}>
                 {obj.name}
               </li>
             ))}

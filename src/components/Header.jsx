@@ -5,6 +5,8 @@ import Search from './Search';
 import logo from '../assets/pizza-logo.svg';
 
 export default function Header() {
+  
+
   return (
     <div className='header'>
       <div className='container'>
