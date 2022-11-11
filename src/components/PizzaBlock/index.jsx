@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { addItem } from '../../redux/slices/cartSlice';
+import { addItem, selectCartById } from '../../redux/slices/cartSlice';
 
 export default function Pizza({ id, title, types, sizes, price, imageUrl }) {
   const dispatch = useDispatch();
-  const cartItemCount = useSelector((state) =>
-    state.cartSlice.items.find((obj) => obj.id === id),
-  );
+  const cartItemCount = useSelector((state) => state.cart.items.find((obj) => obj.id === id));
 
   const addedCount = cartItemCount ? cartItemCount.count : 0;
 
@@ -61,7 +59,6 @@ export default function Pizza({ id, title, types, sizes, price, imageUrl }) {
           <div
             onClick={() => {
               dispatch(addItem(item));
-              console.log(id)
             }}
             className='button button--outline button--add'>
             <svg

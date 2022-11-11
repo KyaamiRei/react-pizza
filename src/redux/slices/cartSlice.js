@@ -9,10 +9,6 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    // addItem(state, action) {
-    //   state.items.push(action.payload);
-    //   state.totalPrice += action.payload.price;
-    // },
     addItem(state, action) {
       const findItem = state.items.find((obj) => obj.id === action.payload.id);
 
@@ -33,7 +29,7 @@ const cartSlice = createSlice({
       }
     },
     removeItem(state, action) {
-      state.items = state.items.filter(item => item.id === action.payload)
+      state.items = state.items.filter((item) => item.id === action.payload);
     },
     clearItems(state) {
       if (window.confirm('Действительно хотите очистить корзину?')) {
@@ -43,6 +39,9 @@ const cartSlice = createSlice({
     },
   },
 });
+
+export const selectCart = (state) => state.cart;
+export const selectCartById = (id) => (state) => state.cart.items.find((obj) => obj.id === id);
 
 export const { addItem, removeItem, clearItems, minusItem } = cartSlice.actions;
 

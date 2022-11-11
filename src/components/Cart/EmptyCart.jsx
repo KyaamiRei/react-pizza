@@ -4,9 +4,9 @@ import emtyCartImage from '../../assets/empty-cart.png';
 
 export default function EmptyCart() {
   return (
-    <div class='cart cart--empty'>
+    <div className='cart cart--empty'>
       <h2>
-        Корзина пустая <icon>😕</icon>
+        Корзина пустая 😕
       </h2>
       <p>
         Вероятней всего, вы не заказывали ещё пиццу.
@@ -19,7 +19,7 @@ export default function EmptyCart() {
       />
       <Link
         to='/'
-        class='button button--black'>
+        className='button button--black'>
         <span>Вернуться назад</span>
       </Link>
     </div>
