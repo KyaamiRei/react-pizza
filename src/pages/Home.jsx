@@ -1,8 +1,8 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setCurrentPage, setFilters } from '../redux/slices/filterSlice';
+import { setCurrentPage, setFilters, selectFilter } from '../redux/slices/filterSlice';
 import { fetchPizzas, selectPizzas } from '../redux/slices/pizzasSlice';
 
 import qs from 'qs';
@@ -20,7 +20,7 @@ export default function Home() {
   const isMounted = useRef(false);
 
   const { items, status } = useSelector(selectPizzas);
-  const { categoryId, currentPage, searchValue, sort } = useSelector((state) => state.filterSlice);
+  const { categoryId, currentPage, searchValue, sort } = useSelector(selectFilter);
 
   const pizzas = items
     .filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
