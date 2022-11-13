@@ -1,13 +1,12 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 import emtyCartImage from '../../assets/empty-cart.png';
 
-export default function EmptyCart() {
+export const EmptyCart = () => {
   return (
     <div className='cart cart--empty'>
-      <h2>
-        Корзина пустая 😕
-      </h2>
+      <h2>Корзина пустая 😕</h2>
       <p>
         Вероятней всего, вы не заказывали ещё пиццу.
         <br />
@@ -24,4 +23,6 @@ export default function EmptyCart() {
       </Link>
     </div>
   );
-}
+};
+
+export default EmptyCart;

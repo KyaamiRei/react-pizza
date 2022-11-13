@@ -2,12 +2,17 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
+import React from 'react';
 
 export default function DetailPizza() {
   const navigate = useNavigate();
 
   const { id } = useParams();
-  const [pizza, setPizza] = useState({});
+  const [pizza, setPizza] = useState<{
+    imageUrl: string;
+    title: string;
+    price: number;
+  }>();
 
   useEffect(() => {
     try {
@@ -25,7 +30,7 @@ export default function DetailPizza() {
   }, []);
 
   if (!pizza) {
-    return 'Loading...';
+    return <>'Loading...'</>;
   }
 
   return (
