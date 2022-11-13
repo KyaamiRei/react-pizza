@@ -6,14 +6,14 @@ import { setSearchValue } from '../../redux/slices/filterSlice';
 
 import styles from './Search.module.scss';
 
-export default function Search() {
+const Search = () => {
   const dispatch = useDispatch();
 
   const [value, setValue] = useState('');
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const updateSearchValue = useCallback(
-    debounce((value) => {
+    debounce((value: string) => {
       dispatch(setSearchValue(value));
     }, 500),
     [],
@@ -42,7 +42,7 @@ export default function Search() {
         <svg
           onClick={() => {
             setSearchValue('');
-            inputRef.current.focus();
+            inputRef.current?.focus();
           }}
           className={styles.close}
           viewBox='0 0 20 20'
@@ -52,4 +52,6 @@ export default function Search() {
       )}
     </div>
   );
-}
+};
+
+export default Search;

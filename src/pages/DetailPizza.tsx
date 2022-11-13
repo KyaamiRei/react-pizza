@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
-import React from 'react';
 
-export default function DetailPizza() {
+const DetailPizza: React.FC = () => {
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -43,4 +42,6 @@ export default function DetailPizza() {
       <h4>{pizza.price}</h4>
     </div>
   );
-}
+};
+
+export default DetailPizza;

@@ -13,7 +13,7 @@ type CartProps = {
   imageUrl: string;
 };
 
-export const CartItem: React.FC<CartProps> = ({ id, title, type, size, count, price, imageUrl }) => {
+const CartItem: React.FC<CartProps> = ({ id, title, type, size, count, price, imageUrl }) => {
   const dispatch = useDispatch();
 
   return (

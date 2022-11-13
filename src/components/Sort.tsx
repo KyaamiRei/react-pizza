@@ -18,7 +18,7 @@ export const sortType: SortProp[] = [
   { name: 'алфавиту (asc)', sortProperty: 'title' },
 ];
 
-export const Sort = () => {
+const Sort: React.FC = () => {
   const dispatch = useDispatch();
   const sortRef = useRef<HTMLDivElement>(null);
   const { sort } = useSelector(selectFilter);

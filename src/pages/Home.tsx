@@ -1,3 +1,4 @@
+import React from 'react'
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,7 +14,7 @@ import Pizza from '../components/PizzaBlock';
 import Sort, { sortType } from '../components/Sort';
 import Sceleton from '../components/PizzaBlock/Sceleton';
 
-export default function Home() {
+const Home: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isSearch = useRef(false);
@@ -23,8 +24,8 @@ export default function Home() {
   const { categoryId, currentPage, searchValue, sort } = useSelector(selectFilter);
 
   const pizzas = items
-    .filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
-    .map((item, index) => (
+    .filter((item: any) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
+    .map((item: any) => (
       <Pizza
         key={item.id}
         {...item}
@@ -39,6 +40,7 @@ export default function Home() {
     const pizzaTitle = searchValue > 0 ? `search=${searchValue}` : '';
 
     dispatch(
+      // @ts-ignore
       fetchPizzas({
         category,
         order,
@@ -97,7 +99,7 @@ export default function Home() {
         {status === 'error' ? (
           <div className='content__error'>
             <h2>
-              Произошла ошибка <icon>😕</icon>
+              Произошла ошибка <span>😕</span>
             </h2>
             <p>К сожалению, не удаолось пиццы. попробуйте повторить позже.</p>
           </div>
@@ -108,8 +110,10 @@ export default function Home() {
 
       <Pagination
         currentPage={currentPage}
-        onChangePage={(number) => dispatch(setCurrentPage(number))}
+        onChangePage={(number: number) => dispatch(setCurrentPage(number))}
       />
     </>
   );
-}
+};
+
+export default Home;

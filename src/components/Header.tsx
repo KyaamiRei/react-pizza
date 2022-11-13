@@ -8,7 +8,7 @@ import Search from './Search';
 
 import logo from '../assets/pizza-logo.svg';
 
-export const Header = () => {
+const Header: React.FC = () => {
   const { items, totalPrice } = useSelector(selectCart);
   const { pathname } = useLocation();
 
