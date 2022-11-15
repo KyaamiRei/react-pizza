@@ -113,6 +113,14 @@ body {
     align-items: center;
   }
 
+  &__item-count-minus {
+    opacity: 0.4;
+    border-color: #787878;
+    &:active {
+      transform: none;
+    }
+  }
+
   .content__title {
     display: flex;
     align-items: center;

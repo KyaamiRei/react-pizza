@@ -3,18 +3,17 @@ import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { useAppDispatch } from '../redux/store';
-import { FetchProp } from '../redux/slices/pizzasSlice';
-
-import {
-  setCurrentPage,
-  setFilters,
-  selectFilter,
-  SortProperty,
-} from '../redux/slices/filterSlice';
-import { fetchPizzas, selectPizzas } from '../redux/slices/pizzasSlice';
-
 import qs from 'qs';
+
+import { useAppDispatch } from '../redux/store';
+
+import { selectPizzas } from '../redux/pizza/selectors';
+import { fetchPizzas } from '../redux/pizza/asyncActions';
+import { FetchProp } from '../redux/pizza/types';
+
+import { selectFilter } from '../redux/filter/selectors';
+import { setCurrentPage, setFilters } from '../redux/filter/slice';
+import { SortProperty } from '../redux/filter/types';
 
 import Categories from '../components/Categories';
 import Pagination from '../Pagination';
@@ -64,14 +63,14 @@ const Home: React.FC = () => {
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1)) as unknown as FetchProp;
-      const sort = sortType.find((obj) => obj.sortProperty === params.sortBy);
+      const sortProp = sortType.find((obj) => obj.sortProperty === params.sortBy);
 
       dispatch(
         setFilters({
           searchValue: params.pizzaTitle,
           categoryId: Number(params.category),
           currentPage: params.currentPage,
-          sort: sort || { name: 'популярности (desc)', sortProperty: SortProperty.RATING_DESC },
+          sort: sortProp || { name: 'популярности (desc)', sortProperty: SortProperty.RATING_DESC },
         }),
       );
     }
@@ -105,8 +104,8 @@ const Home: React.FC = () => {
     <>
       <div className='container'>
         <div className='content__top'>
-          <Categories />
-          <Sort />
+          <Categories idCat={categoryId} />
+          <Sort value={sort} />
         </div>
         <h2 className='content__title'>
           {searchValue.length > 0 ? `Поиск: ${searchValue}` : 'Все пиццы'}
