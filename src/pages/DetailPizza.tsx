@@ -26,7 +26,7 @@ const DetailPizza: React.FC = () => {
       navigate('/');
       console.log(error);
     }
-  }, []);
+  }, [id]);
 
   if (!pizza) {
     return <>'Loading...'</>;

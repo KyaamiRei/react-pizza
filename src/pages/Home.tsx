@@ -1,9 +1,17 @@
-import React from 'react'
+import React from 'react';
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { setCurrentPage, setFilters, selectFilter } from '../redux/slices/filterSlice';
+import { useAppDispatch } from '../redux/store';
+import { FetchProp } from '../redux/slices/pizzasSlice';
+
+import {
+  setCurrentPage,
+  setFilters,
+  selectFilter,
+  SortProperty,
+} from '../redux/slices/filterSlice';
 import { fetchPizzas, selectPizzas } from '../redux/slices/pizzasSlice';
 
 import qs from 'qs';
@@ -15,7 +23,7 @@ import Sort, { sortType } from '../components/Sort';
 import Sceleton from '../components/PizzaBlock/Sceleton';
 
 const Home: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
@@ -37,10 +45,9 @@ const Home: React.FC = () => {
     const category = categoryId > 0 ? `category=${categoryId}` : '';
     const order = sort.sortProperty.includes('-') ? 'desc' : 'asc';
     const sortBy = sort.sortProperty.replace('-', '');
-    const pizzaTitle = searchValue > 0 ? `search=${searchValue}` : '';
+    const pizzaTitle = searchValue > '' ? `search=${searchValue}` : '';
 
     dispatch(
-      // @ts-ignore
       fetchPizzas({
         category,
         order,
@@ -56,9 +63,17 @@ const Home: React.FC = () => {
   // Если был перывый рендер, то проверяем URL параметры и сохраняет в Redux
   useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
-      const sort = sortType.find((obj) => obj.sortProperty === params.sortProperty);
-      dispatch(setFilters({ ...params, sort }));
+      const params = qs.parse(window.location.search.substring(1)) as unknown as FetchProp;
+      const sort = sortType.find((obj) => obj.sortProperty === params.sortBy);
+
+      dispatch(
+        setFilters({
+          searchValue: params.pizzaTitle,
+          categoryId: Number(params.category),
+          currentPage: params.currentPage,
+          sort: sort || { name: 'популярности (desc)', sortProperty: SortProperty.RATING_DESC },
+        }),
+      );
     }
     isSearch.current = true;
   }, []);

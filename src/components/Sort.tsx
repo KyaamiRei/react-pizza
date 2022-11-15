@@ -2,20 +2,24 @@ import React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { selectFilter, setSortType } from '../redux/slices/filterSlice';
+import { selectFilter, setSortType, SortProperty } from '../redux/slices/filterSlice';
 
 type SortProp = {
   name: string;
-  sortProperty: string;
+  sortProperty: SortProperty;
+};
+
+type PopupClick = MouseEvent & {
+  path: Node[];
 };
 
 export const sortType: SortProp[] = [
-  { name: 'популярности (desc)', sortProperty: '-rating' },
-  { name: 'популярности (asc)', sortProperty: 'rating' },
-  { name: 'цене (desc)', sortProperty: '-price' },
-  { name: 'цене (asc)', sortProperty: 'price' },
-  { name: 'алфавиту (desc)', sortProperty: '-title' },
-  { name: 'алфавиту (asc)', sortProperty: 'title' },
+  { name: 'популярности (desc)', sortProperty: SortProperty.RATING_DESC },
+  { name: 'популярности (asc)', sortProperty: SortProperty.RATING_ASC },
+  { name: 'цене (desc)', sortProperty: SortProperty.PRICE_DESC },
+  { name: 'цене (asc)', sortProperty: SortProperty.PRICE_ASC },
+  { name: 'алфавиту (desc)', sortProperty: SortProperty.TITLE_DESC },
+  { name: 'алфавиту (asc)', sortProperty: SortProperty.TITLE_ASC },
 ];
 
 const Sort: React.FC = () => {
@@ -26,8 +30,10 @@ const Sort: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const clickOutside = (event: any) => {
-      if (!event.path.includes(sortRef.current)) {
+    const clickOutside = (event: MouseEvent) => {
+      const _event = event as PopupClick;
+
+      if (sortRef.current && !_event.path.includes(sortRef.current)) {
         setIsVisible(false);
       }
     };
